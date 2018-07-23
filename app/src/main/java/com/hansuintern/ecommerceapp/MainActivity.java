@@ -15,7 +15,7 @@ import android.view.MenuItem;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements EcommerceAdapteter.EcommerceListItemClickListener {
     private RecyclerView myRecyclerView;
     private EcommerceAdapteter ecommerceAdapteter;
 
@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
         //to view our data in the itemlist layout
 
-        ecommerceAdapteter=new EcommerceAdapteter(this);
+        ecommerceAdapteter=new EcommerceAdapteter(this,this);
         myRecyclerView=findViewById(R.id.ecommerceRecyclerView);
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this);
         myRecyclerView.setLayoutManager(linearLayoutManager);
@@ -72,9 +72,16 @@ public class MainActivity extends AppCompatActivity {
         ecommerceAdapteter.setOrderListData(orderList);
     }
     public EcommerceDatabBase getDb(){
-        String dataBaseName="room_db";
+        String dataBaseName="ecommerce_db";
         EcommerceDatabBase ecommerceDatabBase= Room.databaseBuilder
                 (getApplicationContext(),EcommerceDatabBase.class,dataBaseName).allowMainThreadQueries().build();
             return ecommerceDatabBase;
+    }
+
+    @Override
+    public void onItemClick(int itemId) {
+        Intent takeMeToOrderDetailsActivity = new Intent(this,OrderDetails.class);
+        takeMeToOrderDetailsActivity.putExtra(Intent.EXTRA_TEXT,itemId);
+        startActivity(takeMeToOrderDetailsActivity);
     }
 }

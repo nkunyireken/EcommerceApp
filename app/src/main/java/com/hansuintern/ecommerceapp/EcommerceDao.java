@@ -1,6 +1,7 @@
 package com.hansuintern.ecommerceapp;
 
 import android.arch.persistence.room.Dao;
+import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 
@@ -13,6 +14,13 @@ public interface EcommerceDao {
     void insertOrder(Order order);
     @Query("SELECT * FROM `order`")
     List<Order> selectAllOrders();
+    @Query("SELECT * FROM `order` WHERE id = :id")
+    Order getSingleOrderById(int id);
+    @Insert
+    void insertSingleUser(Order user);
+
+    @Delete
+    void deleteUser(Order user);
 
 
 
